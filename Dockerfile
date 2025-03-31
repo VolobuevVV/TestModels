@@ -66,6 +66,8 @@ RUN git clone https://github.com/opencv/opencv.git && \
     cd ../../ && \
     rm -rf opencv opencv_contrib
 
+RUN pip install prettytable
+
 COPY . .
 
 ENTRYPOINT ["python3.9", "main.py"]
