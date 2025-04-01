@@ -35,6 +35,7 @@ def load_pb_graph(modelpath):
 
 
 def detect_pb_model(image, sess):
+    need_classes = [1]
     img_h, img_w, _ = image.shape
     start_time = time.time()
     img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -53,12 +54,19 @@ def detect_pb_model(image, sess):
     )
 
     num_detections = int(out[0][0])
+    boxes = out[2][0][:num_detections]
     scores = out[1][0][:num_detections]
+    class_ids = out[3][0][:num_detections]
 
     valid_detections = scores > 0.8
+
     end_time = time.time()
 
-    return np.sum(valid_detections), end_time - start_time
+    valid_class_ids = np.array([cid in need_classes for cid in class_ids], dtype=bool)
+    valid_combined = valid_detections & valid_class_ids
+    filtered_class_ids = class_ids[valid_combined]
+
+    return len(filtered_class_ids), end_time - start_time
 
 
 def detect_image_with_model(modelpath, image, height, width):
