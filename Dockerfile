@@ -67,7 +67,7 @@ RUN git clone https://github.com/opencv/opencv.git && \
     rm -rf opencv opencv_contrib
 
 RUN pip install prettytable
-
+RUN pip install python-telegram-bot==13.15
 COPY . .
 
-ENTRYPOINT ["python3.9", "main.py"]
+ENTRYPOINT ["python3.9", "test.py"]

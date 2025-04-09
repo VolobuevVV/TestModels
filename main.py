@@ -40,7 +40,7 @@ def detect_image_with_model(modelpath, image, height, width):
     interpreter.invoke()
 
     scores = interpreter.get_tensor(output_details[0]['index'])[0]
-    detected_objects = np.sum(scores > 0.6)
+    detected_objects = np.sum(scores > 0.75)
     end_time = time.time()
 
     return detected_objects, end_time - start_time
@@ -91,12 +91,12 @@ def tflite_detect_images(models, imgpath='TestImages'):
 
 
 models = {
-    "224x224": "detect.tflite",
-    "quant 224x224": "detect_quant.tflite",
-    #"320x320": "detect320.tflite",
+    "224x224": "gtruck_detect224.tflite",
+    #"quant 224x224": "detect_quant.tflite",
+    "224x224v2": "gtruck_detect224v2.tflite",
     #"quant 320x320": "detect_quant320.tflite"
-    "mn_car_224": "mn_car_224.tflite",
-    "mn_car_224_quant": "mn_car_224_quant.tflite"
+    #"mn_car_224": "mn_car_224.tflite",
+    #"mn_car_224_quant": "mn_car_224_quant.tflite"
 }
 
 tflite_detect_images(models)
