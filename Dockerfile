@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi4-64-debian:bullseye
+FROM balenalib/amd64-debian:latest
 
 WORKDIR /root/
 
