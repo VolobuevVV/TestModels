@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ocl-icd-libopencl1 clinfo && \
     rm -rf /var/lib/apt/lists/*
 
+RUN echo 'CFLAGS="-march=znver3 -O3 -ftree-vectorize -flto"' >> /etc/environment && \
+    echo 'CXXFLAGS="-march=znver3 -O3 -ftree-vectorize -flto"' >> /etc/environment
+
 RUN ln -s /usr/bin/ccache /usr/local/bin/cc
 
 RUN wget https://www.python.org/ftp/python/3.9.14/Python-3.9.14.tgz && \
