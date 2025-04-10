@@ -92,11 +92,10 @@ def tflite_detect_images(models, imgpath='TestImages'):
 
 models = {
     "224x224": "gtruck_detect224.tflite",
-    #"quant 224x224": "detect_quant.tflite",
+    "224x224v3": "gtruck_detect224v3.tflite",
     "224x224v2": "gtruck_detect224v2.tflite",
-    #"quant 320x320": "detect_quant320.tflite"
-    #"mn_car_224": "mn_car_224.tflite",
-    #"mn_car_224_quant": "mn_car_224_quant.tflite"
+    "320x320": "gtruck_detect320.tflite",
+    "detect2": "detect2.tflite"
 }
 
 tflite_detect_images(models)

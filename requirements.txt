@@ -1,4 +1,3 @@
 numpy==1.26.4
 tensorflow==2.17.1
-python-daemon==2.1.1
-psycopg2-binary==2.9.10
+prettytable
