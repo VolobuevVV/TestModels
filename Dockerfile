@@ -33,12 +33,12 @@ RUN pip install --no-cache-dir -r requirements.txt && \
 
 RUN git clone https://github.com/opencv/opencv.git && \
     cd opencv && \
-    git checkout 4.5.4 && \
+    git checkout 4.10.0 && \
     git submodule update --recursive --init && \
     cd .. && \
     git clone https://github.com/opencv/opencv_contrib.git && \
     cd opencv_contrib && \
-    git checkout 4.5.4 && \
+    git checkout 4.10.0 && \
     cd ../opencv && \
     mkdir build && \
     cd build && \
