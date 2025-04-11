@@ -1,4 +1,5 @@
-FROM balenalib/amd64-debian:bullseye
+#FROM balenalib/amd64-debian:bullseye
+FROM balenalib/raspberrypi4-64-debian:bullseye
 WORKDIR /root/
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -44,8 +45,8 @@ RUN git clone https://github.com/opencv/opencv.git && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-    #-D EXTRA_C_FLAGS=-mcpu=cortex-a76 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
-    #-D EXTRA_CXX_FLAGS=-mcpu=cortex-a76 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
+    -D EXTRA_C_FLAGS=-mcpu=cortex-a76 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
+    -D EXTRA_CXX_FLAGS=-mcpu=cortex-a76 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D INSTALL_C_EXAMPLES=OFF \
     -D BUILD_TESTS=OFF \
