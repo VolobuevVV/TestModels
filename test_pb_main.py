@@ -5,7 +5,6 @@ import os
 import glob
 import time
 from prettytable import PrettyTable
-tf.compat.v1.disable_eager_execution()  # Отключить Eager Execution
 
 model_path = 'saved_model'
 image_folder = 'TestImages'
