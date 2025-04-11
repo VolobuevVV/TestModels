@@ -6,12 +6,12 @@ import glob
 import time
 from prettytable import PrettyTable
 
-model_path = 'model.onnx'
+model_path = 'model512.onnx'
 image_folder = 'TestImages'
 
 options = ort.SessionOptions()
 options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
-session = ort.InferenceSession(model_path, sess_options=options, providers=['CPUExecutionProvider'])
+session = ort.InferenceSession(model_path)
 
 input_name = session.get_inputs()[0].name
 output_names = [output.name for output in session.get_outputs()]

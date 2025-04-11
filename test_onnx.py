@@ -2,19 +2,19 @@ import onnxruntime as ort
 import cv2
 import numpy as np
 
-session = ort.InferenceSession("model.onnx")
+session = ort.InferenceSession("model512.onnx")
 
 input_name = session.get_inputs()[0].name
 output_names = [output.name for output in session.get_outputs()]
 
-image_path = r"C:\Users\vladi\Documents\TestModels\TestImages\12.jpg"
+image_path = r"C:\Users\vladi\Downloads\photo.jpg"
 image_np = cv2.imread(image_path)
 image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-image_np_resized = cv2.resize(image_np, (320, 320))
+image_np_resized = cv2.resize(image_np, (512, 512))
 input_tensor = np.expand_dims(image_np_resized, axis=0).astype(np.uint8)
 
 outputs = session.run(output_names, {input_name: input_tensor})
-
+print(outputs)
 detection_boxes = outputs[1][0]
 detection_classes = outputs[2][0]
 detection_scores = outputs[4][0]
