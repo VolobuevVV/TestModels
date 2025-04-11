@@ -7,7 +7,7 @@ import time
 from prettytable import PrettyTable
 
 model_path = 'model.onnx'
-image_folder = 'TestImages'
+image_folder = 'TestImagesLarge'
 
 options = ort.SessionOptions()
 options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL

@@ -75,7 +75,7 @@ def handle_non_photo(update: Update, context: CallbackContext):
 
 def main():
     global model
-    model = TFLiteModel("detect2.tflite")
+    model = TFLiteModel("detect.tflite")
 
     TOKEN = 'YOUR_BOT_TOKEN'
 

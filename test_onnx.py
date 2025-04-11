@@ -1,45 +1,55 @@
 import onnxruntime as ort
 import cv2
 import numpy as np
+import os
+import matplotlib.pyplot as plt
 
-session = ort.InferenceSession("model512.onnx")
+session = ort.InferenceSession("model.onnx")
 
 input_name = session.get_inputs()[0].name
 output_names = [output.name for output in session.get_outputs()]
 
-image_path = r"C:\Users\vladi\Downloads\photo.jpg"
-image_np = cv2.imread(image_path)
-image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-image_np_resized = cv2.resize(image_np, (512, 512))
-input_tensor = np.expand_dims(image_np_resized, axis=0).astype(np.uint8)
+image_folder = r"TestImagesLarge"
+images = os.listdir(image_folder)
 
-outputs = session.run(output_names, {input_name: input_tensor})
-print(outputs)
-detection_boxes = outputs[1][0]
-detection_classes = outputs[2][0]
-detection_scores = outputs[4][0]
-num_detections = int(outputs[5][0])
+fig, axes = plt.subplots(len(images), 1, figsize=(10, len(images)*5))
 
-class_labels = ["Class 0", "Class 1", "Class 2"]
+if len(images) == 1:
+    axes = [axes]
 
-for i in range(num_detections):
-    score = detection_scores[i]
-    if score > 0.5:
-        box = detection_boxes[i]
-        ymin, xmin, ymax, xmax = box
-        xmin = int(xmin * image_np.shape[1])
-        xmax = int(xmax * image_np.shape[1])
-        ymin = int(ymin * image_np.shape[0])
-        ymax = int(ymax * image_np.shape[0])
+for i, image_name in enumerate(images):
+    image_path = os.path.join(image_folder, image_name)
 
-        cv2.rectangle(image_np, (xmin, ymin), (xmax, ymax), (255, 0, 0), 2)
+    if not image_name.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
+        continue
 
-        class_id = int(detection_classes[i])
-        label = f"{class_labels[class_id]}: {score:.2f}"
-        cv2.putText(image_np, label, (xmin, ymin - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
+    image_np = cv2.imread(image_path)
+    image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
+    image_resized = cv2.resize(image_np, (320, 320))
+    input_tensor = np.expand_dims(image_np, axis=0).astype(np.uint8)
 
-image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+    outputs = session.run(output_names, {input_name: input_tensor})
 
-cv2.imshow('Detection Result', image_np)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    detection_boxes = outputs[1][0]
+    detection_classes = outputs[2][0]
+    detection_scores = outputs[4][0]
+    num_detections = int(outputs[5][0])
+
+    for j in range(num_detections):
+        score = detection_scores[j]
+        if score > 0.5:
+            box = detection_boxes[j]
+            ymin, xmin, ymax, xmax = box
+            xmin = int(xmin * image_np.shape[1])
+            xmax = int(xmax * image_np.shape[1])
+            ymin = int(ymin * image_np.shape[0])
+            ymax = int(ymax * image_np.shape[0])
+
+            cv2.rectangle(image_np, (xmin, ymin), (xmax, ymax), (255, 0, 0), 2)
+
+    axes[i].imshow(image_np)
+    axes[i].axis('off')
+    axes[i].set_title(f"Detection Result {image_name}")
+
+plt.tight_layout()
+plt.show()
