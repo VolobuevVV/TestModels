@@ -6,7 +6,7 @@ import glob
 import time
 from prettytable import PrettyTable
 
-model_path = 'model512.onnx'
+model_path = 'model.onnx'
 image_folder = 'TestImages'
 
 options = ort.SessionOptions()
