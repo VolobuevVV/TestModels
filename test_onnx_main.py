@@ -9,7 +9,9 @@ from prettytable import PrettyTable
 model_path = 'model.onnx'
 image_folder = 'TestImages'
 
-session = ort.InferenceSession(model_path)
+options = ort.SessionOptions()
+options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+session = ort.InferenceSession(model_path, sess_options=options, providers=['CPUExecutionProvider'])
 
 input_name = session.get_inputs()[0].name
 output_names = [output.name for output in session.get_outputs()]
