@@ -69,4 +69,4 @@ RUN git clone https://github.com/opencv/opencv.git && \
 RUN pip --no-cache-dir install onnxruntime
 COPY . .
 
-ENTRYPOINT ["python3.9", "test_onnx_main.py"]
+ENTRYPOINT ["python3.9", "test_pb_main.py"]
