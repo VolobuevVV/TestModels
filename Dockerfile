@@ -66,7 +66,7 @@ RUN git clone https://github.com/opencv/opencv.git && \
     ldconfig && \
     cd ../../ && \
     rm -rf opencv opencv_contrib
-
+RUN pip --no-cache-dir install onnxruntime
 COPY . .
 
-ENTRYPOINT ["python3.9", "main.py"]
+ENTRYPOINT ["python3.9", "test_onnx_main.py"]
