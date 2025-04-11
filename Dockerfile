@@ -68,6 +68,8 @@ RUN git clone https://github.com/opencv/opencv.git && \
     cd ../../ && \
     rm -rf opencv opencv_contrib
 RUN pip --no-cache-dir install onnxruntime
+RUN pip install python-telegram-bot==13.15
+
 COPY . .
 
 ENTRYPOINT ["python3.9", "test.py"]
