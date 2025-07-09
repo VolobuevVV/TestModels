@@ -45,8 +45,10 @@ RUN git clone https://github.com/opencv/opencv.git && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-    -D EXTRA_C_FLAGS=-mcpu=cortex-a76 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
-    -D EXTRA_CXX_FLAGS=-mcpu=cortex-a76 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
+    -D CMAKE_C_FLAGS="-march=znver3 -O3 -ftree-vectorize -flto" \
+    -D CMAKE_CXX_FLAGS="-march=znver3 -O3 -ftree-vectorize -flto" \
+    #-D EXTRA_C_FLAGS=-mcpu=cortex-a76 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
+    #-D EXTRA_CXX_FLAGS=-mcpu=cortex-a76 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D INSTALL_C_EXAMPLES=OFF \
     -D BUILD_TESTS=OFF \
@@ -68,7 +70,7 @@ RUN git clone https://github.com/opencv/opencv.git && \
     cd ../../ && \
     rm -rf opencv opencv_contrib
 RUN pip --no-cache-dir install onnxruntime
-RUN pip install python-telegram-bot==13.15
+RUN pip install ultralytics
 
 COPY . .
 
