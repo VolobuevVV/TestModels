@@ -26,7 +26,7 @@ RUN wget https://www.python.org/ftp/python/3.9.14/Python-3.9.14.tgz && \
 RUN wget https://bootstrap.pypa.io/get-pip.py && python3.9 get-pip.py && rm get-pip.py
 
 RUN pip install ultralytics --no-deps
-RUN pip install numpy
+RUN pip install numpy torch
 
 COPY . .
 
