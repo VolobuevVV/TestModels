@@ -24,8 +24,11 @@ for model_file in os.listdir(models_folder):
             results = onnx_model(image_path, verbose=False)
             total_time += time.time() - start_time
             count += 1
+            if count % 25 == 0:
+                logger.log(logging.WARNING, f'count: {count:.4f}')
     if count > 0:
         average_time = total_time / count
         logger.log(logging.WARNING, f'Average time: {average_time:.4f} seconds')
         logger.log(logging.WARNING, f'Inferences per second: {1 / average_time:.2f}\n')
+    time.sleep(5)
 
