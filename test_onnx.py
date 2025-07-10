@@ -12,7 +12,7 @@ output_names_model_1 = [output.name for output in session_model_1.get_outputs()]
 input_name_model_2 = session_model_2.get_inputs()[0].name
 output_names_model_2 = [output.name for output in session_model_2.get_outputs()]
 
-image_folder = r"C:\Users\vladi\Downloads\TestPeopleCounting"
+image_folder = r"C:\Users\vladi\Downloads\TestOnnxImages"
 images = [img for img in os.listdir(image_folder) if img.lower().endswith(('.png', '.jpg', '.jpeg', '.webp'))]
 
 for image_name in images:
@@ -23,7 +23,7 @@ for image_name in images:
     input_tensor = np.expand_dims(image_resized, axis=0).astype(np.float32)
 
     outputs = session_model_1.run(output_names_model_1, {input_name_model_1: input_tensor})
-    print(outputs_model_1)
+    print(len(outputs[0][0][12]))
     detection_boxes_model_1, detection_classes_model_1, detection_scores_model_1, num_detections_model_1 = (
         outputs_model_1[1][0], outputs_model_1[2][0], outputs_model_1[4][0], int(outputs_model_1[5][0])
     )
