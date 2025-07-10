@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import os
 
-session_model_1 = ort.InferenceSession("best.onnx")
+session_model_1 = ort.InferenceSession(r"C:\Users\vladi\Downloads\model.onnx")
 session_model_2 = ort.InferenceSession(r"C:\Users\vladi\Downloads\people320_25.onnx")
 
 input_name_model_1 = session_model_1.get_inputs()[0].name
@@ -19,10 +19,11 @@ for image_name in images:
     image_path = os.path.join(image_folder, image_name)
     image_np = cv2.imread(image_path)
     image_rgb = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-    image_resized = cv2.resize(image_rgb, (320, 320))
-    input_tensor = np.expand_dims(image_resized, axis=0).astype(np.uint8)
+    image_resized = cv2.resize(image_rgb, (224, 224))
+    input_tensor = np.expand_dims(image_resized, axis=0).astype(np.float32)
 
-    outputs_model_1 = session_model_1.run(output_names_model_1, {input_name_model_1: input_tensor})
+    outputs = session_model_1.run(output_names_model_1, {input_name_model_1: input_tensor})
+    print(outputs_model_1)
     detection_boxes_model_1, detection_classes_model_1, detection_scores_model_1, num_detections_model_1 = (
         outputs_model_1[1][0], outputs_model_1[2][0], outputs_model_1[4][0], int(outputs_model_1[5][0])
     )
