@@ -6,7 +6,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsqlite3-dev libgdbm-dev libbz2-dev libexpat1-dev liblzma-dev \
     libjpeg-dev libpng-dev libtiff-dev libavcodec-dev libavformat-dev libswscale-dev \
     libv4l-dev libxvidcore-dev libx264-dev libgtk-3-dev libatlas-base-dev gfortran \
-    cmake git unzip v4l2loopback-utils \
+    cmake git unzip libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev ccache \
+    gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav \
+    gstreamer1.0-rtsp gstreamer1.0-vaapi gstreamer1.0-omx v4l2loopback-utils \
     ocl-icd-libopencl1 clinfo aircrack-ng && \
     rm -rf /var/lib/apt/lists/*
 
