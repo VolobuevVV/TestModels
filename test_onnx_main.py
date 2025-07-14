@@ -6,7 +6,7 @@ import glob
 import time
 from prettytable import PrettyTable
 
-model_path = 'model.onnx'
+model_path = r"C:\Users\vladi\Downloads\best(1).onnx"
 image_folder = 'TestImagesLarge'
 
 options = ort.SessionOptions()
@@ -23,23 +23,20 @@ table = PrettyTable(["Файл", "Время (сек)", "FPS", "Объектов
 for image_path in images:
     image_np = cv2.imread(image_path)
     image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-    image_resized = cv2.resize(image_np, (320, 320))
+    image_resized = cv2.resize(image_np, (224, 224))
 
     input_tensor = np.expand_dims(image_resized, axis=0).astype(np.uint8)
 
     start_time = time.time()
 
     outputs = session.run(output_names, {input_name: input_tensor})
-
-    detection_scores = outputs[4]
-    num_objects = np.sum(detection_scores[0] > 0.5)
-
+    print(outputs)
     end_time = time.time()
     time_spent = end_time - start_time
     fps = 1 / time_spent if time_spent > 0 else 0
 
-    table.add_row([os.path.basename(image_path), f"{time_spent:.4f}", f"{fps:.2f}", int(num_objects)])
-    results.append([time_spent, fps, num_objects])
+    table.add_row([os.path.basename(image_path), f"{time_spent:.4f}", f"{fps:.2f}"])
+    results.append([time_spent, fps])
 
 print(table)
 

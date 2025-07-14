@@ -3,11 +3,11 @@ import cv2
 import matplotlib.pyplot as plt
 from ultralytics import YOLO
 
-model1_path = r"C:\Users\vladi\Downloads\test.pt"
+model1_path = r"C:\Users\vladi\Downloads\best(1).onnx"
 
 model1 = YOLO(model1_path)
 
-image_folder = r"C:\Users\vladi\Downloads\TestOnnxImages"
+image_folder = r"C:\Users\vladi\Downloads\TestPeopleCounting"
 
 image_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.webp']
 image_paths = [os.path.join(image_folder, f) for f in os.listdir(image_folder)
@@ -16,7 +16,7 @@ image_paths = [os.path.join(image_folder, f) for f in os.listdir(image_folder)
 for image_path in image_paths:
     image_np = cv2.imread(image_path)
     image_resized = cv2.resize(image_np, (224, 224))
-    results1 = model1(image_resized)
+    results1 = model1(image_np, conf=0.2)
     print(results1)
 
     annotated_img1 = results1[0].plot()
