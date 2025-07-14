@@ -1,10 +1,11 @@
+import logging
 import os
 import time
 import cv2
 import numpy as np
 import onnxruntime as ort
 import onnxruntime_extensions
-
+logger = logging.getLogger()
 
 providers = ['CPUExecutionProvider']
 session_options = ort.SessionOptions()
@@ -33,7 +34,6 @@ for image_file in image_files:
         execution_time = end_time - start_time
         total_time += execution_time
 
-        print(f"Время выполнения: {execution_time:.6f} секунд")
         """
         for i in range(output2.shape[1]):
             x1, y1, w, h, conf, cls = output2[:, i]
@@ -49,6 +49,4 @@ for image_file in image_files:
         """
 if num_images > 0:
     average_time = total_time / num_images
-    print(f"Среднее время выполнения для {num_images} изображений: {average_time:.6f} секунд, FPS - {1 / average_time}")
-else:
-    print("Нет изображений для обработки.")
+    logger.log(logging.WARNING, f"Среднее время выполнения для {num_images} изображений: {average_time:.6f} секунд, FPS - {1 / average_time}")
