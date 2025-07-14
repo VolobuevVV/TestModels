@@ -10,7 +10,7 @@ logger = logging.getLogger()
 providers = ['CPUExecutionProvider']
 session_options = ort.SessionOptions()
 session_options.register_custom_ops_library(onnxruntime_extensions.get_library_path())
-model_onnx = ort.InferenceSession("best(1)_preprocessed.onnx", sess_options=session_options, providers=providers)
+model_onnx = ort.InferenceSession("models/best(1)_preprocessed.onnx", sess_options=session_options, providers=providers)
 
 images_folder = "images"
 
