@@ -3,21 +3,21 @@ from ultralytics import YOLO
 import onnx
 
 
-model_image_size = 224
+model_image_size = 480
 model_iou_threshold = 0.4
 model_score_threshold = 0.3  # 0.40  # 0.3
-model_max_detections_per_class = 100
+model_max_detections_per_class = 10
 model_onnx_opset_version = 19
-model_filename = r"C:\Users\vladi\Downloads\best(1).pt"
-model_export_filename = r"C:\Users\vladi\Downloads\best(1).onnx"
-model_export_filename_preprocessed = r"C:\Users\vladi\Downloads\best(1)_preprocessed.onnx"
+model_filename = r"C:\Users\vladi\Downloads\best_224_12n_310.pt"
+model_export_filename = r"C:\Users\vladi\Downloads\best_224_12n_310.onnx"
+model_export_filename_preprocessed = r"C:\Users\vladi\Downloads\best_224_12n_310_preprocessed.onnx"
 model = YOLO(model_filename)
 model.export(format='onnx')
 
 model = onnx.load(model_export_filename)
 inputs = [create_named_value('image', onnx.TensorProto.UINT8, ['num_bytes'])]
 image_size = model_image_size
-num_classes = 1
+num_classes = 11
 
 pipeline = PrePostProcessor(inputs, model_onnx_opset_version)
 pipeline.add_pre_processing(

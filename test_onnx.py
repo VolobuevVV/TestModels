@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import os
 
-session_model_1 = ort.InferenceSession(r"C:\Users\vladi\Downloads\best(1)_preprocessed.onnx")
+session_model_1 = ort.InferenceSession(r"C:\Users\vladi\Downloads\best(1).onnx")
 session_model_2 = ort.InferenceSession(r"C:\Users\vladi\Downloads\people320_25.onnx")
 
 input_name_model_1 = session_model_1.get_inputs()[0].name

@@ -10,9 +10,9 @@ logger = logging.getLogger()
 providers = ['CPUExecutionProvider']
 session_options = ort.SessionOptions()
 session_options.register_custom_ops_library(onnxruntime_extensions.get_library_path())
-model_onnx = ort.InferenceSession("models/best(1)_preprocessed.onnx", sess_options=session_options, providers=providers)
+model_onnx = ort.InferenceSession(r"C:\Users\vladi\Downloads\gtrucks_480_12n_687_preprocessed.onnx", sess_options=session_options, providers=providers)
 
-images_folder = "images"
+images_folder = r"C:\Users\vladi\Downloads\TS2"
 
 image_files = [f for f in os.listdir(images_folder) if f.endswith(('.jpg', '.jpeg', '.png'))]
 
@@ -33,6 +33,7 @@ for image_file in image_files:
         end_time = time.time()
         execution_time = end_time - start_time
         total_time += execution_time
+        print(1 / execution_time)
 
         """
         for i in range(output2.shape[1]):
