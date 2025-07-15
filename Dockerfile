@@ -29,4 +29,4 @@ RUN pip install onnxruntime_extensions onnxruntime numpy opencv-python
 
 COPY . .
 
-ENTRYPOINT ["python3.9", "test_ultr_onnx_ort.py"]
+ENTRYPOINT ["python3.9", "example.py"]
