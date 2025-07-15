@@ -20,7 +20,7 @@ class YOLOv8:
 
     def initialize_model(self, path):
         self.session = onnxruntime.InferenceSession(path,
-                                                    providers=['CPUExecutionProvider'])
+                                                    providers=['AzureExecutionProvider'])
         # Get model info
         self.get_input_details()
         self.get_output_details()
