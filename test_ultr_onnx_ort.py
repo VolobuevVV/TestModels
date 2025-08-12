@@ -12,7 +12,7 @@ session_options = ort.SessionOptions()
 session_options.register_custom_ops_library(onnxruntime_extensions.get_library_path())
 model_onnx = ort.InferenceSession(r"C:\Users\vladi\Downloads\gtrucks_480_12n_687_preprocessed.onnx", sess_options=session_options, providers=providers)
 
-images_folder = r"C:\Users\vladi\Downloads\TS2"
+images_folder = r"C:\Users\vladi\Downloads\People"
 
 image_files = [f for f in os.listdir(images_folder) if f.endswith(('.jpg', '.jpeg', '.png'))]
 
