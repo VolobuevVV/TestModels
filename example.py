@@ -8,7 +8,7 @@ logger = logging.getLogger()
 
 yolo = YOLOv8("/content/TestModels/best50.onnx", conf_thres=0.2, iou_thres=0.7)
 
-image_folder = "images"
+image_folder = "/content/TestModels/images"
 image_files = [f for f in os.listdir(image_folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
 
 total_time = 0
