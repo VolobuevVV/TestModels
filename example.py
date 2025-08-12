@@ -1,11 +1,10 @@
 import logging
 import os
 import time
-
 import cv2
 from YOLOv8_ONNX import YOLOv8
-logger = logging.getLogger()
 
+logger = logging.getLogger()
 yolo = YOLOv8("/kaggle/working/TestModels/best50.onnx", conf_thres=0.2, iou_thres=0.7)
 
 image_folder = "/kaggle/working/TestModels/images"
@@ -24,4 +23,6 @@ execution_time = end_time - start_time
 
 if num_images > 0:
     average_time = execution_time / num_images
-    logger.log(logging.WARNING, f"Среднее время выполнения для {num_images} изображений: {average_time:.6f} секунд, FPS - {1 / average_time}")
+    fps = 1 / average_time
+    with open("result.txt", "w") as result_file:
+        result_file.write(f"Среднее время выполнения для {num_images} изображений: {average_time:.6f} секунд, FPS - {fps:.2f}\n")
