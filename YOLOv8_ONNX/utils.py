@@ -25,10 +25,7 @@ class Colors:
         return tuple(int(h[1 + i:1 + i + 2], 16) for i in (0, 2, 4))
 
 
-colors = Colors()  # create instance for 'from utils.plots import colors'
 
-limb_color = colors.pose_palette[[9, 9, 9, 9, 7, 7, 7, 0, 0, 0, 0, 0, 16, 16, 16, 16, 16, 16, 16]]
-kpt_color = colors.pose_palette[[16, 16, 16, 16, 16, 0, 0, 0, 0, 0, 0, 9, 9, 9, 9, 9, 9]]
 
 def nms(boxes, scores, iou_threshold):
     # Sort by score
