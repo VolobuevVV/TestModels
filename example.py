@@ -6,7 +6,7 @@ from YOLOv8_ONNX import YOLOv8
 
 logger = logging.getLogger()
 
-yolo_model_1 = YOLOv8("160_437.onnx", conf_thres=0.2, iou_thres=0.7)
+yolo_model_1 = YOLOv8("best_320_12n_326.onnx", conf_thres=0.2, iou_thres=0.7)
 yolo_model_2 = YOLOv8("best50.onnx", conf_thres=0.2, iou_thres=0.7)
 
 image_folder = "images"
