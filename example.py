@@ -6,8 +6,8 @@ from YOLOv8_ONNX import YOLOv8
 
 logger = logging.getLogger()
 
-yolo_model_1 = YOLOv8("best_320_12n_326.onnx", conf_thres=0.7, iou_thres=0.7)
-yolo_model_2 = YOLOv8("best50.onnx", conf_thres=0.7, iou_thres=0.7)
+yolo_model_1 = YOLOv8("best_320_12n_326.onnx", conf_thres=0.7, iou_thres=0.3)
+yolo_model_2 = YOLOv8("best50.onnx", conf_thres=0.7, iou_thres=0.3)
 
 image_folder = "images"
 image_files = [f for f in os.listdir(image_folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
