@@ -1,44 +1,54 @@
+import ast
 import logging
-import os
 import time
+from datetime import datetime
 import cv2
-from YOLOv8_ONNX import YOLOv8
+import psycopg2
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s - %(filename)s - %(lineno)d'
+)
 logger = logging.getLogger()
 
-yolo_model_1 = YOLOv8("best_320_12n_326.onnx", conf_thres=0.7, iou_thres=0.3)
-yolo_model_2 = YOLOv8("best50.onnx", conf_thres=0.7, iou_thres=0.3)
 
-image_folder = "images"
-image_files = [f for f in os.listdir(image_folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
+def get_connection():
+    return psycopg2.connect(
+        dbname='database',
+        user='user',
+        password='password',
+        host='localhost',
+        port='5433'
+    )
 
-total_time_1 = 0
-num_images = len(image_files)
-start_time_1 = time.time()
 
-for image_file in image_files:
-    img_path = os.path.join(image_folder, image_file)
-    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-    yolo_model_1.run(img)
+def get_points_by_time_range(start_time, end_time):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute('''
+                SELECT points FROM plan_points 
+                WHERE fixation_time BETWEEN %s AND %s
+            ''', (start_time, end_time))
+            results = cursor.fetchall()
+            points = []
+            for row in results:
+                points.extend(ast.literal_eval(row[0]))
+        return points
 
-end_time_1 = time.time()
-execution_time_1 = end_time_1 - start_time_1
 
-if num_images > 0:
-    average_time_1 = execution_time_1 / num_images
-    logger.log(logging.WARNING, f"Среднее время выполнения для {num_images} изображений с моделью 1: {average_time_1:.6f} секунд, FPS - {1 / average_time_1}")
+def draw_points_on_image(image_path, points):
+    image = cv2.imread(image_path)
+    height, width = image.shape[:2]
 
-total_time_2 = 0
-start_time_2 = time.time()
+    for x_rel, y_rel in points:
+        x_abs = int(x_rel * width)
+        y_abs = int(y_rel * height)
+        cv2.circle(image, (x_abs, y_abs), 1, (0, 0, 255), -1)
 
-for image_file in image_files:
-    img_path = os.path.join(image_folder, image_file)
-    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-    yolo_model_2.run(img)
 
-end_time_2 = time.time()
-execution_time_2 = end_time_2 - start_time_2
-
-if num_images > 0:
-    average_time_2 = execution_time_2 / num_images
-    logger.log(logging.WARNING, f"Среднее время выполнения для {num_images} изображений с моделью 2: {average_time_2:.6f} секунд, FPS - {1 / average_time_2}")
+image_path = "data/plan.webp"
+time_start = time.time()
+points = get_points_by_time_range(datetime(2025, 9, 16), datetime(2025, 12, 18))
+time_end = time.time()
+logger.info(f'{time_end - time_start}')
+draw_points_on_image(image_path, points)
